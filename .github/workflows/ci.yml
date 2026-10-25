@@ -1,0 +1,65 @@
+name: CI Pipeline - cafeteriafioriorilla
+
+# ── 2. ON ─────────────────────────────────────────────────────────────────────
+# Los eventos que disparan la ejecución de este workflow
+on:
+  push:
+    branches:
+      - main          # Se activa con cada push a main
+  pull_request:
+    branches:
+      - main          # Se activa al abrir o actualizar un PR hacia main
+
+# ── 3. JOBS ───────────────────────────────────────────────────────────────────
+# Conjunto de tareas que se ejecutarán (pueden correr en paralelo o en secuencia)
+jobs:
+
+  verificar-codigo:   # Nombre único del Job (identificador interno)
+
+    # ── 4. RUNS-ON ────────────────────────────────────────────────────────────
+    # Sistema operativo de la máquina virtual efímera que ejecuta el Job
+    # ubuntu-latest = Ubuntu LTS más reciente disponible en GitHub
+    runs-on: ubuntu-latest
+
+    # ── 5. STEPS ──────────────────────────────────────────────────────────────
+    # Secuencia ordenada de pasos. Se ejecutan uno tras otro.
+    # Si un paso falla, el pipeline se detiene y notifica el error.
+    steps:
+
+      # STEP 1 ─ uses: Acción oficial del Marketplace
+      # Clona el repositorio DENTRO del Runner (sin esto, la VM está vacía)
+      - name: 📥 Clonar repositorio (Checkout)
+        uses: actions/checkout@v4
+
+      # STEP 2 ─ uses: Configura la versión de Node.js
+      - name: ⚙️ Configurar Node.js v20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'   # Cachea node_modules para acelerar ejecuciones futuras
+
+      # STEP 3 ─ run: Comando de consola Bash
+      # Instala todas las dependencias del package.json
+      - name: 📦 Instalar dependencias
+        run: npm install
+
+      # STEP 4 ─ run: Ejecuta la suite completa de tests unitarios
+      # Si algún test falla → el pipeline se detiene → NO se puede hacer merge
+      - name: 🧪 Ejecutar pruebas unitarias (Jest)
+        run: npm test
+
+      # STEP 5 ─ run: Bloque de múltiples comandos con el operador |
+      # Muestra información de diagnóstico del entorno del Runner
+      - name: 🔍 Diagnóstico del entorno
+        run: |
+          echo "=== Información del Runner ==="
+          echo "Sistema operativo: $(uname -a)"
+          echo "Fecha y hora UTC:  $(date)"
+          echo "Usuario:           $(whoami)"
+          echo "Directorio actual: $(pwd)"
+          echo "=== Archivos del proyecto ==="
+          ls -la
+
+      # STEP 6 ─ run: Ejecuta la aplicación y muestra su output en los logs
+      - name: 🚀 Ejecutar aplicación Hola Mundo
+        run: node app.js
