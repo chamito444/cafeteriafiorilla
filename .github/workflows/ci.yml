@@ -1,4 +1,4 @@
-name: CI Pipeline - cafeteriafioriorilla
+name: CI Pipeline - hola umundo
 
 # ── 2. ON ─────────────────────────────────────────────────────────────────────
 # Los eventos que disparan la ejecución de este workflow

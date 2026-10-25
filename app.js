@@ -18,9 +18,9 @@ function obtenerFecha() {
     month: 'long',
     day: 'numeric',
   });
-}
+} 
 
-module.exports = { saludar, obtenerFecha };
+module.exports = { saludar, despedir, obtenerFecha };
 
 // Solo ejecutar si se llama directamente (node app.js)
 if (require.main === module) {
