@@ -1,6 +1,6 @@
 
 
-const { saludar, obtenerFecha } = require('./app');
+const { saludar, despedir, obtenerFecha } = require('./app');
 
 // --- Tests de la función saludar() ---
 
@@ -20,6 +20,15 @@ test('saludar() lanza un error si el nombre está vacío', () => {
 
 test('saludar() lanza un error si el nombre es solo espacios', () => {
   expect(() => saludar('   ')).toThrow('El nombre no puede estar vacío');
+});
+
+test('despedir() retorna el mensaje correcto', () => {
+  const resultado = despedir('Carlos');
+  expect(resultado).toBe('¡Hasta luego, Carlos! Recuerda: haz commit frecuente 👋');
+});
+
+test('despedir() lanza un error si el nombre está vacío', () => {
+  expect(() => despedir('')).toThrow('El nombre no puede estar vacío');
 });
 
 // --- Tests de la función obtenerFecha() ---
