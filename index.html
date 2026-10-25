@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+  <title>Fiorella — Heladería & Cafetería | Catálogo Interactivo</title>
+  <meta name="description" content="Catálogo interactivo oficial de Fiorella Heladería & Cafetería: personaliza tu pedido en vivo y envíalo directamente por WhatsApp.">
+  
+  <!-- Tipografías Oficiales del Design Handoff: Cormorant Garamond & Lora & Instrument Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Instrument+Sans:wdth,wght@75..100,400..700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css?v=9">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+</head>
+<body oncontextmenu="return false;" onselectstart="return true;" ondragstart="return false;">
+
+  <!-- Header Editorial Flotante -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="#" class="brand" aria-label="Fiorella - Inicio">
+        <img src="media/fiorella-logo.png" alt="Fiorella Heladería & Cafetería" class="brand-logo">
+      </a>
+      <a href="#catalogo" class="mobile-menu-pill">Carta ↓</a>
+      <nav class="nav" aria-label="Navegación principal">
+        <ul class="nav-list">
+          <li class="nav-item"><a href="#experiencia" class="nav-link">Experiencia</a></li>
+          <li class="nav-item"><a href="#proceso" class="nav-link">Proceso</a></li>
+          <li class="nav-item"><a href="#catalogo" class="nav-link">Catálogo</a></li>
+          <li class="nav-item"><a href="#contacto" class="nav-link">Contacto</a></li>
+          <li class="nav-item"><a href="#catalogo" class="nav-cta-btn">Pedir Online</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    
+    <!-- CONTENEDOR SCROLLYTELLING CON SECUENCIA DE IMÁGENES -->
+    <div class="scrolly-container" id="experiencia">
+      
+      <!-- Lienzo Fixed con animación de 140 frames continua -->
+      <div class="sticky-viewport" aria-hidden="true">
+        <canvas id="scrolly-canvas" class="sequence-canvas"></canvas>
+        <!-- Sello Clásico Vintage 80s (Watermark de Marca) -->
+        <div class="vintage-watermark-seal">
+          <svg viewBox="0 0 160 160" width="110" height="110" class="vintage-seal-svg">
+            <circle cx="80" cy="80" r="74" fill="none" stroke="rgba(220,178,108,0.35)" stroke-width="1.2" stroke-dasharray="3 3"/>
+            <circle cx="80" cy="80" r="68" fill="none" stroke="rgba(220,178,108,0.55)" stroke-width="1.4"/>
+            <circle cx="80" cy="80" r="48" fill="none" stroke="rgba(220,178,108,0.35)" stroke-width="0.9"/>
+            <path id="curve-top" d="M 24 80 A 56 56 0 0 1 136 80" fill="none"/>
+            <path id="curve-bottom" d="M 136 80 A 56 56 0 0 1 24 80" fill="none"/>
+            <text font-family="'Instrument Sans', sans-serif" font-size="7.8" font-weight="600" letter-spacing="2.2" fill="rgba(220,178,108,0.85)">
+              <textPath href="#curve-top" startOffset="50%" text-anchor="middle">
+                TORREFAZIONE ARTIGIANALE
+              </textPath>
+            </text>
+            <text font-family="'Instrument Sans', sans-serif" font-size="7" font-weight="600" letter-spacing="1.5" fill="rgba(220,178,108,0.9)">
+              <textPath href="#curve-bottom" startOffset="50%" text-anchor="middle">
+                ★ PRIMERA TRANSVERSAL 1921 · MAIPÚ 🇨🇱 ★
+              </textPath>
+            </text>
+            <text x="80" y="74" font-family="'Cormorant Garamond', Georgia, serif" font-size="23" font-weight="600" font-style="italic" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">Fiorella</text>
+            <text x="80" y="89" font-family="'Instrument Sans', sans-serif" font-size="7.5" font-weight="600" letter-spacing="2.2" fill="rgba(220,178,108,0.9)" text-anchor="middle">DAL 1984</text>
+            <line x1="60" y1="95" x2="100" y2="95" stroke="rgba(220,178,108,0.5)" stroke-width="0.8"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- SECCIÓN 1: HERO INICIAL (EXTRACCIÓN) -->
+      <section class="story-section section-hero" id="hero-section" aria-label="Hero de Extracción">
+        <div class="hero-container">
+          <div class="hero-editorial">
+            <h1 class="hero-title">
+              <span class="title-line-1">Espacios que se adaptan</span>
+              <span class="title-line-2">a la vida.</span>
+            </h1>
+
+            <p class="hero-body">
+              Una nueva forma de experimentar el café: silenciosa, luminosa y diseñada alrededor de ti.
+            </p>
+
+            <div class="hero-action">
+              <a href="#catalogo" class="btn-cta" aria-label="Ver carta completa de Fiorella">
+                <span>Explorar la Carta</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M6 2V10M6 10L2.5 6.5M6 10L9.5 6.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+
+            <div class="hero-meta" aria-label="Información de serie">
+              <span>SERIE 01</span>
+              <span>/</span>
+              <span>EXTRACCIÓN DE PRECISIÓN</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 2: PROCESO Y SELECCIÓN -->
+      <section class="story-section section-craft" id="proceso" aria-label="Proceso y Catálogo Artesanal">
+        <div class="hero-container">
+          <div class="hero-editorial">
+            <div class="story-tagline">01 / PROCESO Y SELECCIÓN</div>
+            <h2 class="story-title">
+              La materia prima <br>
+              <span class="serif-italic">en su máxima expresión.</span>
+            </h2>
+
+            <p class="hero-body">
+              Avanzamos por el mesón artesanal: molienda fresca de altura, masa madre laminada cada mañana y helados soft de receta propia.
+            </p>
+
+            <div class="story-highlights">
+              <div class="highlight-bullet">
+                <span class="bullet-dot"></span>
+                <span><strong>Grano Seleccionado:</strong> Tueste medio con notas achocolatadas.</span>
+              </div>
+              <div class="highlight-bullet">
+                <span class="bullet-dot"></span>
+                <span><strong>Hojaldres Diarios:</strong> Croissants y napolitanas recién horneadas.</span>
+              </div>
+            </div>
+
+            <div class="hero-action">
+              <a href="#catalogo" class="btn-cta secondary-cta">
+                <span>Conocer Especialidades</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN 3: LA EXPERIENCIA EN MESA -->
+      <section class="story-section section-experience" id="encuentro" aria-label="La Experiencia en Mesa">
+        <div class="hero-container">
+          <div class="hero-editorial">
+            <div class="story-tagline">02 / LA EXPERIENCIA EN MESA</div>
+            <h2 class="story-title">
+              El ritual servido <br>
+              <span class="serif-italic">para tus sentidos.</span>
+            </h2>
+
+            <p class="hero-body">
+              La taza humeante y el postre recién servido en la madera. Un espacio acogedor pensado para que cada pausa tenga valor.
+            </p>
+
+            <div class="hero-action">
+              <a href="#catalogo" class="btn-cta">
+                <span>Hacer tu Pedido</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M2 6H10M10 6L6.5 2.5M10 6L6.5 9.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            </div>
+
+            <div class="hero-meta">
+              <span>FIORELLA CAFETERÍA</span>
+              <span>/</span>
+              <span>SABOR & REUNIÓN</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- SECCIÓN CATÁLOGO INTERACTIVO (DESIGN HANDOFF) -->
+    <section id="catalogo" class="catalog-section" aria-label="Catálogo Interactivo de Productos">
+      <div class="catalog-container">
+        
+        <!-- Header del Catálogo -->
+        <div class="catalog-header">
+          <div class="catalog-kicker">PIDE DESDE LA CARTA</div>
+          <h2 class="catalog-title">
+            Nuestra Carta <em>artesanal</em>
+          </h2>
+          <p class="catalog-subtitle">
+            Toca cualquier producto para personalizarlo, agrégalo a tu bandeja y envíanos tu pedido directo por WhatsApp.
+          </p>
+        </div>
+
+        <!-- 1. Vitrina en Movimiento (Marquee Ticker) -->
+        <div class="vitrina-container" aria-label="Vitrina en movimiento">
+          <div class="vitrina-header">
+            <span class="vitrina-kicker">VITRINA DESTACADA</span>
+            <span class="vitrina-hint">Toca cualquier especialidad para pedirla</span>
+          </div>
+          <div class="marquee-wrapper">
+            <!-- Tira de productos destacados con imágenes WebP -->
+            <div class="vitrina-card" onclick="handleRowClick('Cafe·Espresso')">
+              <div class="vitrina-media-slot">
+                <img src="media/assets/fio-cafe-espresso.webp" alt="Espresso" class="vitrina-img" loading="lazy">
+              </div>
+              <div class="vitrina-card-info">
+                <span class="vitrina-card-title">Espresso</span>
+                <span class="vitrina-card-dots"></span>
+                <span class="vitrina-card-price">$2.400</span>
+              </div>
+            </div>
+
+            <div class="vitrina-card" onclick="handleRowClick('Cafe·Latte Sabores')">
+              <div class="vitrina-media-slot">
+                <img src="media/assets/fio-cafe-latte-sabores.webp" alt="Latte Sabores" class="vitrina-img" loading="lazy">
+              </div>
+              <div class="vitrina-card-info">
+                <span class="vitrina-card-title">Latte Sabores</span>
+                <span class="vitrina-card-dots"></span>
+                <span class="vitrina-card-price">$2.800</span>
+              </div>
+            </div>
+
+            <div class="vitrina-card" onclick="handleRowClick('Helados·Canasta Borde de Chocolate')">
+              <div class="vitrina-media-slot">
+                <img src="media/assets/fio-helados-canasta-borde-de-chocolate.webp" alt="Canasta Borde de Chocolate" class="vitrina-img" loading="lazy">
+              </div>
+              <div class="vitrina-card-info">
+                <span class="vitrina-card-title">Canasta Chocolate</span>
+                <span class="vitrina-card-dots"></span>
+                <span class="vitrina-card-price">$3.690</span>
+              </div>
+            </div>
+
+            <div class="vitrina-card" onclick="handleRowClick('Croissant·Croissant Nutella')">
+              <div class="vitrina-media-slot">
+                <img src="media/assets/fio-croissant-croissant-nutella.webp" alt="Croissant Nutella" class="vitrina-img" loading="lazy">
+              </div>
+              <div class="vitrina-card-info">
+                <span class="vitrina-card-title">Croissant Nutella</span>
+                <span class="vitrina-card-dots"></span>
+                <span class="vitrina-card-price">$3.500</span>
+              </div>
+            </div>
+
+            <div class="vitrina-card" onclick="handleRowClick('Waffle·Waffle Artesanal')">
+              <div class="vitrina-media-slot">
+                <img src="media/assets/fio-waffle-waffle-artesanal.webp" alt="Waffle Artesanal" class="vitrina-img" loading="lazy">
+              </div>
+              <div class="vitrina-card-info">
+                <span class="vitrina-card-title">Waffle Artesanal</span>
+                <span class="vitrina-card-dots"></span>
+                <span class="vitrina-card-price">$4.990</span>
+              </div>
+            </div>
+
+            <div class="vitrina-card" onclick="handleRowClick('Sandwiches·Ciabatta Jamon, Queso y Rucula')">
+              <div class="vitrina-media-slot">
+                <img src="media/assets/fio-sandwiches-ciabatta-jamon-queso-y-rucula.webp" alt="Ciabatta Jamón & Rúcula" class="vitrina-img" loading="lazy">
+              </div>
+              <div class="vitrina-card-info">
+                <span class="vitrina-card-title">Ciabatta Jamón & Rúcula</span>
+                <span class="vitrina-card-dots"></span>
+                <span class="vitrina-card-price">$5.400</span>
+              </div>
+            </div>
+
+            <!-- Duplicado para loop continuo -->
+            <div class="vitrina-card" onclick="handleRowClick('Cafe·Espresso')">
+              <div class="vitrina-media-slot">
+                <img src="media/assets/fio-cafe-espresso.webp" alt="Espresso" class="vitrina-img" loading="lazy">
+              </div>
+              <div class="vitrina-card-info">
+                <span class="vitrina-card-title">Espresso</span>
+                <span class="vitrina-card-dots"></span>
+                <span class="vitrina-card-price">$2.400</span>
+              </div>
+            </div>
+
+            <div class="vitrina-card" onclick="handleRowClick('Cafe·Latte Sabores')">
+              <div class="vitrina-media-slot">
+                <img src="media/assets/fio-cafe-latte-sabores.webp" alt="Latte Sabores" class="vitrina-img" loading="lazy">
+              </div>
+              <div class="vitrina-card-info">
+                <span class="vitrina-card-title">Latte Sabores</span>
+                <span class="vitrina-card-dots"></span>
+                <span class="vitrina-card-price">$2.800</span>
+              </div>
+            </div>
+
+            <div class="vitrina-card" onclick="handleRowClick('Helados·Canasta Borde de Chocolate')">
+              <div class="vitrina-media-slot">
+                <img src="media/assets/fio-helados-canasta-borde-de-chocolate.webp" alt="Canasta Borde de Chocolate" class="vitrina-img" loading="lazy">
+              </div>
+              <div class="vitrina-card-info">
+                <span class="vitrina-card-title">Canasta Chocolate</span>
+                <span class="vitrina-card-dots"></span>
+                <span class="vitrina-card-price">$3.690</span>
+              </div>
+            </div>
+
+            <div class="vitrina-card" onclick="handleRowClick('Croissant·Croissant Nutella')">
+              <div class="vitrina-media-slot">
+                <img src="media/assets/fio-croissant-croissant-nutella.webp" alt="Croissant Nutella" class="vitrina-img" loading="lazy">
+              </div>
+              <div class="vitrina-card-info">
+                <span class="vitrina-card-title">Croissant Nutella</span>
+                <span class="vitrina-card-dots"></span>
+                <span class="vitrina-card-price">$3.500</span>
+              </div>
+            </div>
+
+            <div class="vitrina-card" onclick="handleRowClick('Waffle·Waffle Artesanal')">
+              <div class="vitrina-media-slot">
+                <img src="media/assets/fio-waffle-waffle-artesanal.webp" alt="Waffle Artesanal" class="vitrina-img" loading="lazy">
+              </div>
+              <div class="vitrina-card-info">
+                <span class="vitrina-card-title">Waffle Artesanal</span>
+                <span class="vitrina-card-dots"></span>
+                <span class="vitrina-card-price">$4.990</span>
+              </div>
+            </div>
+
+            <div class="vitrina-card" onclick="handleRowClick('Sandwiches·Ciabatta Jamon, Queso y Rucula')">
+              <div class="vitrina-media-slot">
+                <img src="media/assets/fio-sandwiches-ciabatta-jamon-queso-y-rucula.webp" alt="Ciabatta Jamón & Rúcula" class="vitrina-img" loading="lazy">
+              </div>
+              <div class="vitrina-card-info">
+                <span class="vitrina-card-title">Ciabatta Jamón & Rúcula</span>
+                <span class="vitrina-card-dots"></span>
+                <span class="vitrina-card-price">$5.400</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Feature Card: Carta del Día (Rotativa) -->
+        <div class="feature-showcase-card" id="feature-card">
+          <div class="feat-left">
+            <div class="story-tagline" id="feat-kicker">01 / ESPECIALIDAD</div>
+            <div class="feat-ghost-num" id="feat-ghost">01</div>
+            <h3 class="feat-title" id="feat-title">Café</h3>
+            <div class="feat-meta" id="feat-meta">8 preparaciones</div>
+            <div class="feat-pips-bar" id="feat-pips"></div>
+          </div>
+          <div class="feat-divider"></div>
+          <div class="feat-right-list" id="feat-list">
+            <!-- Generado dinámicamente -->
+          </div>
+        </div>
+
+        <!-- 3. Barra Sticky: Buscador y Filtros -->
+        <div class="catalog-controls-sticky">
+          <div class="search-pill-wrapper">
+            <svg class="search-icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input 
+              type="text" 
+              id="catalog-search-input" 
+              class="search-input-pill" 
+              placeholder="Buscar café, helado, croissant, waffle…" 
+              aria-label="Buscar en la carta">
+            <button id="search-clear-btn" class="search-clear-btn" aria-label="Limpiar búsqueda" style="display: none;">&times;</button>
+          </div>
+
+          <nav class="category-chips-list" aria-label="Filtrar por sección">
+            <button class="category-chip-btn active" data-cat-key="all">Todos</button>
+            <button class="category-chip-btn" data-cat-key="Cafe">Café</button>
+            <button class="category-chip-btn" data-cat-key="Infusiones">Chocolate & Chai</button>
+            <button class="category-chip-btn" data-cat-key="Helados">Helados Soft</button>
+            <button class="category-chip-btn" data-cat-key="Galletones">Galletones</button>
+            <button class="category-chip-btn" data-cat-key="Sandwiches">Sándwiches</button>
+            <button class="category-chip-btn" data-cat-key="Croissant">Croissant</button>
+            <button class="category-chip-btn" data-cat-key="Pasteleria">Pastelería</button>
+            <button class="category-chip-btn" data-cat-key="Waffle">Waffle Artesanal</button>
+          </nav>
+        </div>
+
+        <!-- Banner Destacado: Formulario Oficial de Pedidos -->
+        <div class="catalog-form-callout">
+          <div class="catalog-form-callout-text">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--gold-l); flex-shrink: 0;">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            <span><strong>¿Prefieres formulario?</strong> También puedes enviar tu pedido directamente en nuestro formulario oficial.</span>
+          </div>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdWRvhxTIQnnP09Op6IyqPw-P6dj-yUNyadpO4Yz6XFTs_LPQ/viewform" target="_blank" rel="noopener noreferrer" class="btn-form-callout">
+            <span>Pedir por Formulario Google →</span>
+          </a>
+        </div>
+
+        <!-- 4. Grilla de Secciones y Productos -->
+        <div class="menu-grid-handoff" id="menu-grid">
+          <!-- Renderizado dinámico desde script-handoff.js -->
+        </div>
+
+        <!-- Estado vacío -->
+        <div id="no-results-box" style="display: none; text-align: center; padding: 60px 20px; border: 1px dashed var(--line); border-radius: var(--radius-sm); margin-top: 30px;">
+          <h4 style="font-family: var(--font-serif-title); font-size: 26px; color: var(--ink); margin-bottom: 8px;">No encontramos coincidencias</h4>
+          <p style="font-size: 14px; color: var(--muted); margin-bottom: 18px;">Prueba buscando "espresso", "nutella", "canasta" o selecciona una categoría.</p>
+          <button class="btn-cta secondary-cta" onclick="document.getElementById('catalog-search-input').value=''; state.searchQuery=''; state.activeCategory='all'; renderCatalog();">Ver toda la carta</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- BANDEJA FIJA DE PEDIDO (FIXED BOTTOM TRAY) -->
+    <div id="order-tray" class="order-tray-fixed" aria-label="Bandeja de pedido">
+
+      <!-- Detalle editable: se despliega tocando el total -->
+      <div class="tray-cart-wrap">
+        <div class="tray-cart-head">
+          <span>TU PEDIDO</span>
+          <button class="tray-cart-cerrar" onclick="toggleTrayCart(false)">Cerrar</button>
+        </div>
+        <div id="tray-cart-list" class="tray-cart-list"></div>
+      </div>
+
+      <div class="order-tray-panel">
+        
+        <div class="tray-total-col" onclick="toggleTrayCart()" role="button" tabindex="0"
+             title="Ver y editar tu pedido">
+          <div>
+            <div class="tray-items-count" id="tray-count">0 productos</div>
+            <div class="tray-total-price" id="tray-total">$0</div>
+          </div>
+          <button id="tray-cart-toggle" class="tray-cart-toggle" aria-expanded="false"
+                  aria-label="Ver y editar tu pedido" onclick="event.stopPropagation(); toggleTrayCart()">
+            <svg width="14" height="14" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.4"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="tray-delivery-modes" role="radiogroup" aria-label="Modo de entrega">
+          <button class="tray-mode-btn active" data-mode="Retiro en local" onclick="setDeliveryMode('Retiro en local')">Retiro en local</button>
+          <button class="tray-mode-btn" data-mode="En mesa" onclick="setDeliveryMode('En mesa')">En mesa</button>
+          <button class="tray-mode-btn is-disabled" data-mode="Delivery" disabled aria-disabled="true" title="Delivery no disponible actualmente">
+            Delivery <span class="badge-disabled-tag">No disponible</span>
+          </button>
+        </div>
+
+        <div class="tray-actions-group">
+          <!-- Botón Destacado: Pedir por Formulario Google -->
+          <a id="tray-form-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSdWRvhxTIQnnP09Op6IyqPw-P6dj-yUNyadpO4Yz6XFTs_LPQ/viewform" target="_blank" rel="noopener noreferrer" class="tray-btn-form" title="Completar pedido mediante Formulario Oficial">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            <span>Pedir por Formulario</span>
+          </a>
+
+          <!-- Botón Principal: Enviar pedido directo al local -->
+          <button class="tray-btn-send" id="tray-send-btn" onclick="enviarPedidoAlLocal()" title="Enviar el pedido directamente al local">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+            <span>Enviar pedido</span>
+          </button>
+
+          <!-- Botón Destacado: Pedir por WhatsApp -->
+          <button class="tray-btn-whatsapp" id="tray-whatsapp-btn" onclick="sendWhatsAppOrder()">
+            <img src="media/whatsapp-logo.png" alt="WhatsApp" class="wsp-btn-icon" width="22" height="22">
+            <span>Pedir por WhatsApp</span>
+          </button>
+
+          <button class="tray-btn-secondary" id="tray-copy-btn" onclick="copyOrderText()" title="Copiar detalle">Copiar</button>
+          <button class="tray-btn-secondary" onclick="clearCart()" title="Vaciar pedido">Vaciar</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HOJA MODAL DE PERSONALIZACIÓN (SHEET) -->
+    <div id="sheet-modal" class="sheet-backdrop" role="dialog" aria-modal="true" aria-label="Personalizar producto">
+      <div class="sheet-panel" id="sheet-body">
+        <!-- Renderizado dinámicamente por script-handoff.js -->
+      </div>
+    </div>
+
+    <!-- SECCIÓN REELS EN VIVO / INSTAGRAM -->
+    <section id="reels" class="reels-section" aria-label="Reels de Instagram y Momentos en Video">
+      <div class="reels-container">
+        
+        <div class="reels-header">
+          <div class="reels-kicker">MOMENTOS FIORELLA / REELS EN VIVO</div>
+          <h2 class="reels-title">
+            La experiencia <em>en movimiento</em>
+          </h2>
+          <p class="reels-subtitle">
+            Toca cualquier reel para reproducir y activar el sonido. Conoce el ritual diario de nuestro café y pastelería.
+          </p>
+          <div class="reels-profile-bar">
+            <a href="https://www.instagram.com/fiorellacafe.cl/" target="_blank" rel="noopener noreferrer" class="instagram-follow-badge">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              <span>@fiorellacafe.cl</span>
+              <strong class="follow-action-label">Seguir en Instagram →</strong>
+            </a>
+          </div>
+        </div>
+
+        <div class="reels-grid">
+          
+          <!-- Reel 1: Fiorella Café Maipú -->
+          <article class="reel-card" onclick="toggleReelSound(this)">
+            <div class="reel-video-wrapper">
+              <video class="reel-video" src="media/reels/reel_oficial_fiorella.mp4" poster="media/reels/reel_oficial_fiorella_thumb.jpg" autoplay loop muted playsinline preload="auto"></video>
+              <div class="reel-overlay-controls">
+                <button class="reel-sound-btn" onclick="event.stopPropagation(); toggleReelSound(this.closest('.reel-card'))" aria-label="Activar o silenciar volumen">
+                  <svg class="icon-muted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                  </svg>
+                  <svg class="icon-unmuted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                </button>
+                <div class="reel-live-tag">
+                  <span class="live-pulse"></span> REEL
+                </div>
+              </div>
+            </div>
+            <div class="reel-info">
+              <div class="reel-meta-tag">EXPERIENCIA FIORELLA</div>
+              <h3 class="reel-caption-title">Fiorella Café Maipú ✨</h3>
+              <p class="reel-caption-desc">Conoce nuestro acogedor local en Primera Transversal, Maipú.</p>
+              <a href="https://www.instagram.com/fiorellacafe.cl/" target="_blank" rel="noopener noreferrer" class="reel-insta-link" onclick="event.stopPropagation()">Ver en Instagram ↗</a>
+            </div>
+          </article>
+
+          <!-- Reel 2: El Ritual del Café -->
+          <article class="reel-card" onclick="toggleReelSound(this)">
+            <div class="reel-video-wrapper">
+              <video class="reel-video" src="media/reels/reel_insta_01.mp4" poster="media/reels/reel_insta_01_thumb.jpg" autoplay loop muted playsinline preload="auto"></video>
+              <div class="reel-overlay-controls">
+                <button class="reel-sound-btn" onclick="event.stopPropagation(); toggleReelSound(this.closest('.reel-card'))" aria-label="Activar o silenciar volumen">
+                  <svg class="icon-muted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                  </svg>
+                  <svg class="icon-unmuted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                </button>
+                <div class="reel-live-tag">
+                  <span class="live-pulse"></span> REEL
+                </div>
+              </div>
+            </div>
+            <div class="reel-info">
+              <div class="reel-meta-tag">BARISTA & GRANO</div>
+              <h3 class="reel-caption-title">El Ritual del Café ☕</h3>
+              <p class="reel-caption-desc">Molienda fresca de altura y extracción pura en cada taza.</p>
+              <a href="https://www.instagram.com/fiorellacafe.cl/" target="_blank" rel="noopener noreferrer" class="reel-insta-link" onclick="event.stopPropagation()">Ver en Instagram ↗</a>
+            </div>
+          </article>
+
+          <!-- Reel 3: Helados Soft & Toppings -->
+          <article class="reel-card" onclick="toggleReelSound(this)">
+            <div class="reel-video-wrapper">
+              <video class="reel-video" src="media/reels/reel_insta_02.mp4" poster="media/reels/reel_insta_02_thumb.jpg" autoplay loop muted playsinline preload="auto"></video>
+              <div class="reel-overlay-controls">
+                <button class="reel-sound-btn" onclick="event.stopPropagation(); toggleReelSound(this.closest('.reel-card'))" aria-label="Activar o silenciar volumen">
+                  <svg class="icon-muted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                  </svg>
+                  <svg class="icon-unmuted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                </button>
+                <div class="reel-live-tag">
+                  <span class="live-pulse"></span> REEL
+                </div>
+              </div>
+            </div>
+            <div class="reel-info">
+              <div class="reel-meta-tag">HELADERÍA ARTESANAL</div>
+              <h3 class="reel-caption-title">Helados Soft & Toppings 🍦</h3>
+              <p class="reel-caption-desc">Canastas de chocolate, frutas de temporada y salsas caseras.</p>
+              <a href="https://www.instagram.com/fiorellacafe.cl/" target="_blank" rel="noopener noreferrer" class="reel-insta-link" onclick="event.stopPropagation()">Ver en Instagram ↗</a>
+            </div>
+          </article>
+
+          <!-- Reel 4: Croissants & Hojaldres -->
+          <article class="reel-card" onclick="toggleReelSound(this)">
+            <div class="reel-video-wrapper">
+              <video class="reel-video" src="media/reels/reel_insta_03.mp4" poster="media/reels/reel_insta_03_thumb.jpg" autoplay loop muted playsinline preload="auto"></video>
+              <div class="reel-overlay-controls">
+                <button class="reel-sound-btn" onclick="event.stopPropagation(); toggleReelSound(this.closest('.reel-card'))" aria-label="Activar o silenciar volumen">
+                  <svg class="icon-muted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                  </svg>
+                  <svg class="icon-unmuted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                </button>
+                <div class="reel-live-tag">
+                  <span class="live-pulse"></span> REEL
+                </div>
+              </div>
+            </div>
+            <div class="reel-info">
+              <div class="reel-meta-tag">PANADERÍA & PASTELERÍA</div>
+              <h3 class="reel-caption-title">Croissants & Hojaldres 🥐</h3>
+              <p class="reel-caption-desc">Medialunas rellenas de manjar/nutella y hojaldres recién horneados.</p>
+              <a href="https://www.instagram.com/fiorellacafe.cl/" target="_blank" rel="noopener noreferrer" class="reel-insta-link" onclick="event.stopPropagation()">Ver en Instagram ↗</a>
+            </div>
+          </article>
+
+          <!-- Reel 5: Waffles & Especialidades -->
+          <article class="reel-card" onclick="toggleReelSound(this)">
+            <div class="reel-video-wrapper">
+              <video class="reel-video" src="media/reels/reel_insta_04.mp4" poster="media/reels/reel_insta_04_thumb.jpg" autoplay loop muted playsinline preload="auto"></video>
+              <div class="reel-overlay-controls">
+                <button class="reel-sound-btn" onclick="event.stopPropagation(); toggleReelSound(this.closest('.reel-card'))" aria-label="Activar o silenciar volumen">
+                  <svg class="icon-muted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                  </svg>
+                  <svg class="icon-unmuted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                </button>
+                <div class="reel-live-tag">
+                  <span class="live-pulse"></span> REEL
+                </div>
+              </div>
+            </div>
+            <div class="reel-info">
+              <div class="reel-meta-tag">LA CASA RECOMIENDA</div>
+              <h3 class="reel-caption-title">Waffles & Especialidades 🧇</h3>
+              <p class="reel-caption-desc">Waffles artesanales coronados con crema chantilly y helado soft.</p>
+              <a href="https://www.instagram.com/fiorellacafe.cl/" target="_blank" rel="noopener noreferrer" class="reel-insta-link" onclick="event.stopPropagation()">Ver en Instagram ↗</a>
+            </div>
+          </article>
+
+          <!-- Reel 6: Encuentros en Cafetería -->
+          <article class="reel-card" onclick="toggleReelSound(this)">
+            <div class="reel-video-wrapper">
+              <video class="reel-video" src="media/reels/reel_insta_05.mp4" poster="media/reels/reel_insta_05_thumb.jpg" autoplay loop muted playsinline preload="auto"></video>
+              <div class="reel-overlay-controls">
+                <button class="reel-sound-btn" onclick="event.stopPropagation(); toggleReelSound(this.closest('.reel-card'))" aria-label="Activar o silenciar volumen">
+                  <svg class="icon-muted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                  </svg>
+                  <svg class="icon-unmuted" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                </button>
+                <div class="reel-live-tag">
+                  <span class="live-pulse"></span> REEL
+                </div>
+              </div>
+            </div>
+            <div class="reel-info">
+              <div class="reel-meta-tag">SABOR & REUNIÓN</div>
+              <h3 class="reel-caption-title">Encuentros en Fiorella 🤍</h3>
+              <p class="reel-caption-desc">Espacios diseñados para compartir un café inolvidable.</p>
+              <a href="https://www.instagram.com/fiorellacafe.cl/" target="_blank" rel="noopener noreferrer" class="reel-insta-link" onclick="event.stopPropagation()">Ver en Instagram ↗</a>
+            </div>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FOOTER / CONTACTO -->
+    <footer id="contacto" class="site-footer" role="contentinfo">
+      <div class="footer-container">
+        <div>
+          <img src="media/fiorella-logo.png" alt="Fiorella Heladería & Cafetería" class="footer-logo-img">
+          <p class="footer-bio">
+            Creamos experiencias gastronómicas acogedoras donde el café de especialidad, los helados soft y la pastelería fresca se unen en un solo lugar.
+          </p>
+          <div style="margin-top: 16px;">
+            <a href="https://www.instagram.com/fiorellacafe.cl/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-serif-body); font-size: 13.5px; color: var(--gold-l); text-decoration: none; border-bottom: 1px dotted var(--line-on); padding-bottom: 2px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              <span>Instagram: @fiorellacafe.cl</span>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-heading">Horarios</div>
+          <p class="footer-detail">Lunes a Domingo</p>
+          <p class="footer-detail-sub">09:00 hrs – 20:30 hrs</p>
+          <p class="footer-detail-sub">Atención en mesa y para llevar</p>
+        </div>
+
+        <div>
+          <div class="footer-heading">Ubicación & Contacto</div>
+          <p class="footer-detail">📍 Primera Transversal 1921</p>
+          <p class="footer-detail-sub">Maipú, Santiago de Chile 🇨🇱</p>
+          <p class="footer-detail-sub" style="margin-top: 8px; color: var(--gold);">Local Fiorella Heladería & Cafetería</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Fiorella Heladería & Cafetería · 📍 Primera Transversal 1921, Maipú 🇨🇱</p>
+        <p class="footer-credits">
+          <span>Desarrollado por <a href="https://hmmcode.cl" target="_blank" rel="noopener noreferrer" class="hmmcode-btn-badge" title="Visitar hmmcode.cl"><strong>hmmcode</strong> ↗</a></span>
+          <span class="footer-dot">·</span>
+          <a href="https://www.instagram.com/fiorellacafe.cl/" target="_blank" rel="noopener noreferrer" style="color: var(--gold-l); text-decoration: none;">Instagram @fiorellacafe.cl</a>
+        </p>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="script.js?v=16"></script>
+</body>
+</html>

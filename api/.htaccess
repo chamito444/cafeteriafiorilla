@@ -1,0 +1,36 @@
+# API de pedidos Fiorella
+
+# config.php nunca debe servirse como archivo
+<FilesMatch "^(config\.php|.*\.php\.(bak|sinGeo|old|save))$">
+    Require all denied
+</FilesMatch>
+
+# Los scripts de mantenimiento no tienen por que ser alcanzables desde fuera.
+# Si necesitas correr una migracion, comenta este bloque, correla y descomentalo.
+<FilesMatch "^(instalar|migrar_.*|limpiar|purgar_datos)\.php$">
+    Require all denied
+</FilesMatch>
+
+Options -Indexes
+
+<IfModule mod_headers.c>
+    Header always set Cache-Control "no-store, no-cache, must-revalidate"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "no-referrer"
+    Header always set X-Frame-Options "DENY"
+    Header always set Permissions-Policy "geolocation=(self), camera=(), microphone=()"
+    # La API solo se sirve por HTTPS
+    Header always set Strict-Transport-Security "max-age=31536000"
+    Header unset X-Powered-By
+</IfModule>
+
+# Forzar HTTPS
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Nunca mostrar errores de PHP al visitante
+php_flag display_errors off
+php_flag log_errors on

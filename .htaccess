@@ -1,0 +1,71 @@
+# ==============================================================================
+# HMMCODE SECURE HOSTING CONFIGURATION - FIORELLA CAFETERIA
+# ==============================================================================
+
+# 1. DESACTIVAR NAVEGACIÓN Y LISTADO DE DIRECTORIOS
+Options -Indexes -MultiViews -ExecCGI
+
+# 2. BLOQUEO DE ARCHIVOS SENSIBLES, OCULTOS Y CONFIGURACIONES
+<FilesMatch "(^\.|\.(htaccess|htpasswd|ini|log|sh|inc|bak|sql|git|env|json|md|py|yml|yaml|config)$)">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# 3. RESTRINGIR MÉTODOS HTTP PELIGROSOS (SOLO GET, POST, HEAD)
+<LimitExcept GET POST HEAD>
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</LimitExcept>
+
+# 4. CABECERAS DE SEGURIDAD HTTP ESTRICTAS
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set X-XSS-Protection "1; mode=block"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=()"
+  Header always set Content-Security-Policy "default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data: blob:; media-src 'self' https: blob: data:; style-src 'self' https: 'unsafe-inline'; font-src 'self' https: data:; connect-src 'self' https:;"
+</IfModule>
+
+# 5. TIPOS MIME Y OPTIMIZACIÓN DE ASSETS
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+  AddType video/mp4 .mp4
+  AddType text/css .css
+  AddType application/javascript .js
+</IfModule>
+
+# 6. CACHÉ INTELIGENTE PARA RENDIMIENTO MÁXIMO
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType video/mp4 "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+</IfModule>
+
+# 6b. EL HTML NUNCA SE CACHEA (para que los cambios se vean al instante)
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# 7. COMPRESIÓN GZIP / DEFLATE
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
+</IfModule>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Estado de tu pedido — Fiorella</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,600&family=Instrument+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #12100d;
+    --panel: #1a1712;
+    --panel-alt: #221d16;
+    --line: #33291c;
+    --ink: #f4efe5;
+    --muted: #a89880;
+    --gold: #b68235;
+    --gold-l: #dcb26c;
+    --verde: #4ade80;
+    --azul: #60a5fa;
+    --font-title: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'Instrument Sans', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    padding: 24px 18px max(24px, env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .wrap { width: 100%; max-width: 460px; }
+
+  .marca {
+    text-align: center;
+    margin-bottom: 26px;
+  }
+  .marca h1 {
+    font-family: var(--font-title);
+    font-size: 34px;
+    font-style: italic;
+    font-weight: 600;
+    color: var(--gold-l);
+    letter-spacing: 0.5px;
+  }
+  .marca p {
+    font-size: 10.5px;
+    letter-spacing: 2.4px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .tarjeta {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 26px 22px;
+  }
+
+  .folio-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-align: center;
+  }
+  .folio {
+    font-family: 'Courier New', monospace;
+    font-size: 27px;
+    font-weight: 700;
+    color: var(--gold-l);
+    text-align: center;
+    margin: 4px 0 22px;
+    letter-spacing: 1px;
+  }
+
+  /* Linea de progreso */
+  .pasos { display: flex; align-items: flex-start; margin-bottom: 24px; }
+  .paso { flex: 1; text-align: center; position: relative; }
+
+  .paso::before {
+    content: '';
+    position: absolute;
+    top: 13px; left: -50%;
+    width: 100%; height: 2px;
+    background: var(--line);
+    z-index: 0;
+  }
+  .paso:first-child::before { display: none; }
+  .paso.hecho::before { background: var(--gold); }
+
+  .bolita {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--panel-alt);
+    border: 2px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 7px;
+    position: relative; z-index: 1;
+    font-size: 13px;
+    transition: all 0.35s ease;
+  }
+  .paso.hecho .bolita {
+    background: var(--gold);
+    border-color: var(--gold-l);
+    color: #1a1208;
+  }
+  .paso.actual .bolita {
+    animation: latido 1.8s ease-in-out infinite;
+    box-shadow: 0 0 0 4px rgba(220, 178, 108, 0.18);
+  }
+  @keyframes latido {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.12); }
+  }
+
+  .paso span {
+    font-size: 9.5px;
+    color: var(--muted);
+    display: block;
+    line-height: 1.3;
+  }
+  .paso.hecho span { color: var(--ink); font-weight: 600; }
+
+  .estado-caja {
+    background: var(--panel-alt);
+    border-radius: 10px;
+    padding: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+    border: 1px solid var(--line);
+  }
+  .estado-titulo {
+    font-family: var(--font-title);
+    font-size: 25px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  .estado-sub { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+  .seccion-titulo {
+    font-size: 10px;
+    letter-spacing: 1.8px;
+    color: var(--gold-l);
+    margin-bottom: 10px;
+  }
+
+  .item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 13.5px;
+  }
+  .item:last-child { border-bottom: none; }
+  .item-cant { color: var(--gold-l); font-weight: 700; flex-shrink: 0; }
+  .item-nombre { flex: 1; }
+  .item-op { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .total-label { font-size: 11px; letter-spacing: 1.6px; color: var(--muted); }
+  .total-valor { font-size: 25px; font-weight: 700; color: var(--gold-l); }
+
+  .pie {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .pie a { color: var(--gold-l); text-decoration: none; }
+
+  .aviso-actualiza {
+    text-align: center;
+    font-size: 11px;
+    color: #5a4d3c;
+    margin-top: 14px;
+  }
+  .punto {
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--verde);
+    margin-right: 5px;
+    animation: parpadeo 2s ease-in-out infinite;
+  }
+  @keyframes parpadeo { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+  .buscador { display: flex; gap: 8px; margin-top: 16px; }
+  .buscador input {
+    flex: 1;
+    background: var(--panel-alt);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--ink);
+    font-family: 'Courier New', monospace;
+    font-size: 15px;
+    letter-spacing: 1px;
+  }
+  .buscador input:focus { outline: none; border-color: var(--gold); }
+  .buscador button {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-l) 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    color: #1a1208;
+    font-weight: 700;
+    font-size: 13.5px;
+    cursor: pointer;
+    font-family: var(--font-body);
+  }
+
+  .error {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .listo-destacado {
+    background: linear-gradient(135deg, rgba(74, 222, 128, 0.16), rgba(74, 222, 128, 0.05));
+    border-color: rgba(74, 222, 128, 0.45);
+  }
+  .listo-destacado .estado-titulo { color: var(--verde); }
+
+  .mesa-chip {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 12px;
+    padding: 5px 16px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-l) 100%);
+    color: #1a1208;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+  }
+
+  .estimado-caja {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    background: rgba(96, 165, 250, 0.1);
+    border: 1px solid rgba(96, 165, 250, 0.35);
+    border-radius: 10px;
+    padding: 13px;
+    margin: -8px 0 20px;
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .estimado-caja strong { color: var(--azul); }
+  .cola-caja {
+    display: flex; align-items: center; justify-content: center; gap: 9px;
+    background: rgba(192, 132, 252, .1);
+    border: 1px solid rgba(192, 132, 252, .35);
+    border-radius: 10px; padding: 13px; margin: -8px 0 20px;
+    font-size: 14px; color: var(--ink);
+  }
+  .cola-caja strong { color: #c084fc; }
+
+  body.destello { animation: destelloBg 0.9s ease; }
+  @keyframes destelloBg {
+    0%, 100% { background: var(--bg); }
+    30%      { background: #2a2317; }
+  }
+  .estimado-vencido {
+    background: rgba(220, 178, 108, .12);
+    border-color: rgba(220, 178, 108, .4);
+  }
+  .estimado-vencido strong { color: var(--gold-l); }
+  .estimado-icono { font-size: 17px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="marca">
+    <h1>Fiorella</h1>
+    <p>HELADERÍA &amp; CAFETERÍA</p>
+  </div>
+
+  <div id="contenido" class="tarjeta">
+    <div class="error">Cargando tu pedido…</div>
+  </div>
+
+  <div class="pie">
+    📍 Primera Transversal 1921, Maipú<br>
+    <a href="https://www.instagram.com/fiorellacafe.cl/" target="_blank" rel="noopener">@fiorellacafe.cl</a>
+    &nbsp;·&nbsp;
+    <a href="index.html">Volver a la carta</a>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var API = 'api/estado_pedido.php';
+  var INTERVALO = 10000;
+  var estadoPrevio = null;
+  var timer = null;
+
+  var PASOS = ['nuevo', 'en_cola', 'preparando', 'listo', 'entregado'];
+
+  function textos(estado, esMesa) {
+    var T = {
+      nuevo:      { titulo: 'Pedido recibido',  sub: 'Ya lo vimos. En un momento empezamos a prepararlo.' },
+      en_cola:    { titulo: 'En la fila',       sub: 'Estamos terminando otros pedidos. El tuyo sigue.' },
+      preparando: { titulo: 'Preparándolo',     sub: 'Tu pedido está en el mesón.' },
+      listo:      { titulo: '¡Listo!',          sub: 'Puedes pasar a retirarlo cuando quieras.' },
+      entregado:  { titulo: 'Entregado',        sub: 'Gracias por preferirnos. ¡Te esperamos pronto!' },
+      cancelado:  { titulo: 'Pedido cancelado', sub: 'Si crees que es un error, avísale a alguien del local.' }
+    };
+    if (esMesa) {
+      T.preparando.sub = 'Tu pedido está en el mesón. Te lo llevamos a la mesa.';
+      T.listo.titulo   = '¡Va en camino!';
+      T.listo.sub      = 'Tu pedido ya sale hacia tu mesa.';
+      T.entregado.sub  = '¡Que lo disfrutes! Gracias por preferirnos.';
+    }
+    return T[estado] || { titulo: estado, sub: '' };
+  }
+
+  var ICONOS = { nuevo: '✓', en_cola: '•', preparando: '☕', listo: '🔔', entregado: '🤍' };
+  var NOMBRES = { nuevo: 'Recibido', en_cola: 'En fila', preparando: 'Preparando', listo: 'Listo', entregado: 'Entregado' };
+
+  function precio(n) {
+    return '$' + Number(n).toLocaleString('es-CL').replace(/,/g, '.');
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function folioDeUrl() {
+    var p = new URLSearchParams(location.search).get('folio');
+    return (p || '').trim().toUpperCase();
+  }
+
+  function pintarBuscador(mensaje) {
+    document.getElementById('contenido').innerHTML =
+      '<div class="error">' + esc(mensaje) + '</div>' +
+      '<div class="buscador">' +
+        '<input id="in-folio" placeholder="F-260901-0001" autocomplete="off" spellcheck="false">' +
+        '<button id="btn-folio">Ver</button>' +
+      '</div>';
+
+    var ir = function () {
+      var v = document.getElementById('in-folio').value.trim().toUpperCase();
+      if (v) location.search = '?folio=' + encodeURIComponent(v);
+    };
+    document.getElementById('btn-folio').addEventListener('click', ir);
+    document.getElementById('in-folio').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') ir();
+    });
+  }
+
+  // Un timbre por cambio de estado. Cada estado suena distinto para que el
+  // cliente sepa que paso sin sacar el telefono del bolsillo.
+  var MELODIAS = {
+    en_cola:    [[660, 0.10]],
+    preparando: [[660, 0.10], [880, 0.14]],
+    listo:      [[880, 0.12], [1175, 0.12], [1568, 0.26]],
+    entregado:  [[880, 0.10], [660, 0.20]],
+    cancelado:  [[440, 0.18], [330, 0.26]]
+  };
+
+  var TITULOS_AVISO = {
+    en_cola:    'Tu pedido esta en la fila',
+    preparando: 'Ya estamos preparando tu pedido',
+    listo:      'Tu pedido esta listo',
+    entregado:  'Pedido entregado',
+    cancelado:  'Tu pedido fue cancelado'
+  };
+
+  function sonar(estado) {
+    var notas = MELODIAS[estado];
+    if (!notas) return;
+    try {
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      if (ctx.state === 'suspended') ctx.resume();
+      var t = 0;
+      notas.forEach(function (n) {
+        var frec = n[0], dur = n[1];
+        var o = ctx.createOscillator();
+        var g = ctx.createGain();
+        o.type = 'sine';
+        o.connect(g); g.connect(ctx.destination);
+        o.frequency.value = frec;
+        g.gain.setValueAtTime(0.0001, ctx.currentTime + t);
+        g.gain.exponentialRampToValueAtTime(0.35, ctx.currentTime + t + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + t + dur);
+        o.start(ctx.currentTime + t);
+        o.stop(ctx.currentTime + t + dur + 0.02);
+        t += dur * 0.75;
+      });
+    } catch (e) { /* sin audio, seguimos */ }
+  }
+
+  function vibrar(estado) {
+    try {
+      if (!navigator.vibrate) return;
+      navigator.vibrate(estado === 'listo' ? [180, 90, 180, 90, 320] : [140]);
+    } catch (e) { /* nada */ }
+  }
+
+  function avisarCambio(estado) {
+    sonar(estado);
+    vibrar(estado);
+
+    try {
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification('Fiorella', {
+          body: TITULOS_AVISO[estado] || 'Tu pedido cambio de estado',
+          icon: 'media/fiorella-logo.png',
+          tag: 'fiorella-estado'
+        });
+      }
+    } catch (e) { /* sin notificaciones, seguimos */ }
+
+    // Destello para que se note aunque el telefono este en silencio
+    try {
+      document.body.classList.add('destello');
+      setTimeout(function () { document.body.classList.remove('destello'); }, 900);
+    } catch (e) { /* nada */ }
+  }
+
+  // -------------------------------------------------------------------------
+  // COLA Y TIEMPO ESTIMADO
+  // El panel fija minutos_estimados y estimado_en (hora de Chile, igual que el
+  // telefono del cliente). Aqui se muestra la cuenta regresiva.
+  // -------------------------------------------------------------------------
+  var pedidoActual = null;
+  var tickTimer = null;
+
+  function bloqueCola(p, estado) {
+    if (estado !== 'en_cola' || typeof p.en_cola_delante !== 'number') return '';
+    var n = p.en_cola_delante;
+    var txt = n === 0
+      ? (p.hay_preparando ? 'Eres el <strong>siguiente</strong> en la fila' : 'Ya casi: <strong>vas primero</strong>')
+      : 'Hay <strong>' + n + '</strong> pedido' + (n === 1 ? '' : 's') + ' antes que el tuyo';
+    return '<div class="cola-caja"><span class="estimado-icono">⏳</span><span>' + txt + '</span></div>';
+  }
+
+  function finEstimado(p) {
+    if (!p || p.minutos_estimados == null || !p.estimado_en) return null;
+    var inicio = new Date(String(p.estimado_en).replace(' ', 'T'));
+    if (isNaN(inicio.getTime())) return null;
+    return inicio.getTime() + p.minutos_estimados * 60000;
+  }
+
+  function textoEstimado(p) {
+    var fin = finEstimado(p);
+    if (fin == null) return null;
+    var faltan = Math.ceil((fin - Date.now()) / 60000);
+    if (faltan <= 0) {
+      return { vencido: true, html: 'Ya casi está, <strong>solo unos minutos más</strong>' };
+    }
+    return {
+      vencido: false,
+      html: 'Listo en aprox. <strong>' + faltan + ' min</strong>'
+    };
+  }
+
+  function bloqueEstimado(p, estado) {
+    if (estado !== 'nuevo' && estado !== 'en_cola' && estado !== 'preparando') return '';
+    var t = textoEstimado(p);
+    if (!t) return '';
+    return '<div id="estimado-caja" class="estimado-caja' + (t.vencido ? ' estimado-vencido' : '') + '">' +
+      '<span class="estimado-icono">⏱</span><span id="estimado-txt">' + t.html + '</span></div>';
+  }
+
+  // Refresca la cuenta regresiva entre consultas al servidor
+  function arrancarTick() {
+    if (tickTimer) return;
+    tickTimer = setInterval(function () {
+      var caja = document.getElementById('estimado-caja');
+      var span = document.getElementById('estimado-txt');
+      if (!caja || !span || !pedidoActual) return;
+      var t = textoEstimado(pedidoActual);
+      if (!t) return;
+      span.innerHTML = t.html;
+      caja.classList.toggle('estimado-vencido', t.vencido);
+    }, 15000);
+  }
+
+  function pintar(p) {
+    var estado = p.estado;
+    var idx = PASOS.indexOf(estado);
+    var esMesa = p.mesa != null;
+    var txt = textos(estado, esMesa);
+
+    var pasosHtml = '';
+    if (estado !== 'cancelado') {
+      PASOS.forEach(function (paso, i) {
+        var clases = 'paso';
+        if (i <= idx) clases += ' hecho';
+        if (i === idx) clases += ' actual';
+        pasosHtml +=
+          '<div class="' + clases + '">' +
+            '<div class="bolita">' + (i <= idx ? (ICONOS[paso] || '•') : '') + '</div>' +
+            '<span>' + NOMBRES[paso] + '</span>' +
+          '</div>';
+      });
+      pasosHtml = '<div class="pasos">' + pasosHtml + '</div>';
+    }
+
+    var itemsHtml = (p.items || []).map(function (it) {
+      return '<div class="item">' +
+        '<span class="item-cant">' + it.cantidad + '×</span>' +
+        '<span class="item-nombre">' + esc(it.nombre) +
+          (it.opciones ? '<span class="item-op">' + esc(it.opciones.replace(/ \| /g, ' · ')) + '</span>' : '') +
+        '</span>' +
+      '</div>';
+    }).join('');
+
+    document.getElementById('contenido').innerHTML =
+      (esMesa
+        ? '<div class="mesa-chip">MESA ' + p.mesa + '</div>'
+        : '') +
+      '<div class="folio-label">TU PEDIDO</div>' +
+      '<div class="folio">' + esc(p.folio) + '</div>' +
+      pasosHtml +
+      '<div class="estado-caja' + (estado === 'listo' ? ' listo-destacado' : '') + '">' +
+        '<div class="estado-titulo">' + esc(txt.titulo) + '</div>' +
+        '<div class="estado-sub">' + esc(txt.sub) + '</div>' +
+      '</div>' +
+      bloqueCola(p, estado) +
+      bloqueEstimado(p, estado) +
+      '<div class="seccion-titulo">TU PEDIDO · ' + esc((p.modo_entrega || '').toUpperCase()) + '</div>' +
+      itemsHtml +
+      '<div class="total">' +
+        '<span class="total-label">TOTAL</span>' +
+        '<span class="total-valor">' + precio(p.total) + '</span>' +
+      '</div>' +
+      (estado === 'entregado' || estado === 'cancelado' ? '' :
+        '<div class="aviso-actualiza"><span class="punto"></span>Esta página se actualiza sola</div>');
+
+    pedidoActual = p;
+    arrancarTick();
+
+    // Avisar en cualquier cambio de estado, nunca en la primera carga
+    if (estadoPrevio && estadoPrevio !== estado) {
+      avisarCambio(estado);
+    }
+    estadoPrevio = estado;
+
+    if (estado === 'entregado' || estado === 'cancelado') {
+      // El pedido termino: la carta ya no ofrece "Ver mi pedido"
+      try { localStorage.removeItem('fiorella_ultimo_pedido'); } catch (e) {}
+      clearInterval(timer);
+      if (tickTimer) clearInterval(tickTimer);
+    }
+  }
+
+  function consultar(folio) {
+    fetch(API + '?folio=' + encodeURIComponent(folio) + '&t=' + Date.now())
+      .then(function (r) {
+        return r.json()
+          .catch(function () { return {}; })
+          .then(function (d) { return { ok: r.ok, status: r.status, d: d || {} }; });
+      })
+      .then(function (res) {
+        if (res.ok && res.d.ok) {
+          pintar(res.d.pedido);
+          return;
+        }
+        // Solo el folio malo o inexistente corta el seguimiento. Un error del
+        // servidor o del limite de peticiones (WiFi del local compartido) es
+        // pasajero: seguimos consultando y dejamos lo ultimo que se vio.
+        if (res.status === 400 || res.status === 404) {
+          clearInterval(timer);
+          pintarBuscador(res.d.error || 'No encontramos ese pedido.');
+          return;
+        }
+        if (!pedidoActual) avisoReintento();
+      })
+      .catch(function () { if (!pedidoActual) avisoReintento(); });
+  }
+
+  function avisoReintento() {
+    document.getElementById('contenido').innerHTML =
+      '<div class="aviso-actualiza"><span class="punto"></span>' +
+      'Conectando con el local... reintentamos solos en unos segundos.</div>';
+  }
+
+  var folio = folioDeUrl();
+
+  if (!folio) {
+    pintarBuscador('Ingresa el folio que te dimos al hacer tu pedido.');
+  } else {
+    if ('Notification' in window && Notification.permission === 'default') {
+      setTimeout(function () { Notification.requestPermission(); }, 2500);
+    }
+    consultar(folio);
+    timer = setInterval(function () { consultar(folio); }, INTERVALO);
+
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) consultar(folio);
+    });
+  }
+})();
+</script>
+</body>
+</html>

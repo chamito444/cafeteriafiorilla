@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Capturar ubicación del local — Fiorella</title>
+<meta name="robots" content="noindex">
+<style>
+  :root {
+    --bg: #12100d; --panel: #1a1712; --panel-alt: #221d16; --line: #33291c;
+    --ink: #f4efe5; --muted: #a89880; --gold: #b68235; --gold-l: #dcb26c;
+    --verde: #4ade80; --rojo: #f87171; --azul: #60a5fa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: system-ui, -apple-system, sans-serif;
+    min-height: 100vh; padding: 22px 16px;
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .wrap { width: 100%; max-width: 420px; }
+  h1 { font-size: 19px; font-weight: 600; margin-bottom: 4px; color: var(--gold-l); }
+  .sub { font-size: 12.5px; color: var(--muted); margin-bottom: 20px; line-height: 1.6; }
+
+  .tarjeta {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; padding: 20px; margin-bottom: 14px;
+  }
+
+  button {
+    width: 100%; padding: 15px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-l));
+    color: #1a1208; border: none; border-radius: 10px;
+    font-size: 15px; font-weight: 700; cursor: pointer;
+    font-family: inherit;
+  }
+  button:disabled { opacity: .55; cursor: wait; }
+
+  .dato { display: flex; justify-content: space-between; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  .dato:last-child { border-bottom: none; }
+  .dato span:first-child { color: var(--muted); }
+  .dato span:last-child { font-family: 'Courier New', monospace; font-weight: 700; }
+
+  .precision-buena { color: var(--verde); }
+  .precision-media { color: var(--gold-l); }
+  .precision-mala  { color: var(--rojo); }
+
+  .aviso { font-size: 12px; line-height: 1.6; padding: 13px; border-radius: 9px; margin-top: 12px; }
+  .aviso-info { background: rgba(96,165,250,.1); border: 1px solid rgba(96,165,250,.3); color: #cfe2fb; }
+  .aviso-mal  { background: rgba(248,113,113,.1); border: 1px solid rgba(248,113,113,.35); color: #f8caca; }
+
+  .copiar {
+    background: var(--panel-alt); border: 1px solid var(--gold);
+    color: var(--gold-l); font-family: 'Courier New', monospace;
+    font-size: 13px; padding: 13px; border-radius: 9px;
+    margin-top: 12px; word-break: break-all; line-height: 1.7;
+  }
+  .lecturas { font-size: 11.5px; color: var(--muted); margin-top: 10px; line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Ubicación del local</h1>
+  <p class="sub">
+    Párate <strong>dentro de la cafetería</strong>, idealmente cerca de las mesas,
+    y toca el botón. Deja que tome varias lecturas para afinar la precisión.
+  </p>
+
+  <div class="tarjeta">
+    <button id="btn">Capturar mi ubicación</button>
+    <div id="salida"></div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var btn = document.getElementById('btn');
+  var salida = document.getElementById('salida');
+  var lecturas = [];
+  var watchId = null;
+
+  function clasePrecision(m) {
+    if (m <= 20) return 'precision-buena';
+    if (m <= 60) return 'precision-media';
+    return 'precision-mala';
+  }
+
+  function textoPrecision(m) {
+    if (m <= 20) return 'excelente';
+    if (m <= 60) return 'aceptable';
+    return 'pobre — aléjate de paredes o sal un momento';
+  }
+
+  function mejorLectura() {
+    return lecturas.slice().sort(function (a, b) { return a.acc - b.acc; })[0];
+  }
+
+  function pintar() {
+    var m = mejorLectura();
+    if (!m) return;
+
+    var lat = m.lat.toFixed(6);
+    var lon = m.lon.toFixed(6);
+    var acc = Math.round(m.acc);
+
+    salida.innerHTML =
+      '<div style="margin-top:18px">' +
+        '<div class="dato"><span>Latitud</span><span>' + lat + '</span></div>' +
+        '<div class="dato"><span>Longitud</span><span>' + lon + '</span></div>' +
+        '<div class="dato"><span>Precisión</span><span class="' + clasePrecision(acc) + '">' + acc + ' m</span></div>' +
+      '</div>' +
+      '<div class="aviso ' + (acc <= 60 ? 'aviso-info' : 'aviso-mal') + '">' +
+        'Precisión ' + textoPrecision(acc) +
+      '</div>' +
+      '<div class="copiar">' +
+        'LOCAL_LAT = ' + lat + '<br>' +
+        'LOCAL_LON = ' + lon +
+      '</div>' +
+      '<div class="lecturas">' + lecturas.length + ' lectura(s) tomadas. ' +
+        'Se muestra la más precisa. Deja la pantalla abierta unos segundos más para mejorarla.' +
+      '</div>';
+  }
+
+  btn.addEventListener('click', function () {
+    if (!navigator.geolocation) {
+      salida.innerHTML = '<div class="aviso aviso-mal">Este navegador no soporta geolocalización.</div>';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Midiendo…';
+    lecturas = [];
+
+    watchId = navigator.geolocation.watchPosition(
+      function (pos) {
+        lecturas.push({
+          lat: pos.coords.latitude,
+          lon: pos.coords.longitude,
+          acc: pos.coords.accuracy
+        });
+        pintar();
+
+        // Con 8 lecturas o precision muy buena, cortamos
+        var m = mejorLectura();
+        if (lecturas.length >= 8 || (m && m.acc <= 10)) {
+          navigator.geolocation.clearWatch(watchId);
+          btn.disabled = false;
+          btn.textContent = 'Medir de nuevo';
+        }
+      },
+      function (err) {
+        navigator.geolocation.clearWatch(watchId);
+        btn.disabled = false;
+        btn.textContent = 'Reintentar';
+        var msg = err.code === 1
+          ? 'Le negaste el permiso de ubicación al navegador. Habilítalo y reintenta.'
+          : 'No pudimos obtener la ubicación (' + err.message + ')';
+        salida.innerHTML = '<div class="aviso aviso-mal">' + msg + '</div>';
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+    );
+
+    // Tope de 30 s por si nunca converge
+    setTimeout(function () {
+      if (watchId !== null) {
+        navigator.geolocation.clearWatch(watchId);
+        btn.disabled = false;
+        btn.textContent = 'Medir de nuevo';
+      }
+    }, 30000);
+  });
+})();
+</script>
+</body>
+</html>
