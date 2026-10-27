@@ -1,6 +1,4 @@
 
-
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -22,28 +20,27 @@
     <description>API REST de Estudiantes - Spring Boot + MySQL + SonarCloud + Snyk</description>
 
     <properties>
-        <!-- Java 17 -->
+        <!-- Java 17: compatible con el JDK 21 del runner -->
         <java.version>17</java.version>
-        <!-- Fuerza compilación a bytecode Java 17 aunque el JDK del entorno sea 21 -->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.release>17</maven.compiler.release>
 
-        <!-- SonarCloud -->
-        <sonar.projectKey>chamito444</sonar.projectKey>
-        <sonar.organization>chamito444mysqllocal24</sonar.organization>
+        <!-- SonarCloud: verifica que coincidan con tu proyecto real -->
+        <sonar.projectKey>chamito444mysqllocal24</sonar.projectKey>
+        <sonar.organization>chamito444</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.projectName>cafeteriafiorilla</sonar.projectName>
     </properties>
 
     <dependencies>
-        <!-- Spring Web: para exponer la API REST -->
+        <!-- Spring Web: API REST -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- Spring Data JPA: para hablar con la base de datos -->
+        <!-- Spring Data JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -62,7 +59,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- DevTools: reinicio automático en desarrollo -->
+        <!-- DevTools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -70,28 +67,28 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Lombok: reduce código repetitivo -->
+        <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
 
-        <!-- Swagger UI: documentación y prueba interactiva de la API -->
+        <!-- Swagger UI -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.3.0</version>
         </dependency>
 
-        <!-- Testing: JUnit 5 + Mockito -->
+        <!-- Testing: JUnit 5 y Mockito -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <!-- H2: base de datos en memoria para los tests de integración -->
+        <!-- H2: base de datos en memoria para tests -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -101,7 +98,7 @@
 
     <build>
         <plugins>
-            <!-- Plugin principal de Spring Boot -->
+            <!-- Plugin de Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -115,14 +112,14 @@
                 </configuration>
             </plugin>
 
-            <!-- SonarCloud: análisis de calidad de código -->
+            <!-- SonarCloud -->
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>3.9.1.2184</version>
             </plugin>
 
-            <!-- JaCoCo: cobertura de código en los tests -->
+            <!-- JaCoCo: cobertura de tests -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -133,6 +130,7 @@
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
+
                     <execution>
                         <id>report</id>
                         <phase>test</phase>
@@ -146,3 +144,4 @@
     </build>
 
 </project>
+
