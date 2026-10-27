@@ -10,10 +10,6 @@ jobs:
   build-test-analyze:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: mysql-local-2.4/mysql-local-2.4
-
     # ── Servicio MySQL para tests ──
     services:
       mysql:
@@ -66,10 +62,10 @@ jobs:
       # ── 5. Analizar con SonarCloud ──
       - name: Análisis SonarCloud
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # automático, no lo crees tú
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          mvn org.sonarsource.scanner.maven:sonar-maven-plugin:5.8.0.7211:sonar \
+          mvn sonar:sonar \
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
             -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
             -Dsonar.host.url=https://sonarcloud.io \
@@ -77,12 +73,12 @@ jobs:
 
       # ── 6. Escanear dependencias con Snyk ──
       - name: Escaneo de vulnerabilidades Snyk (dependencias)
+        uses: snyk/actions/maven@master
         continue-on-error: true           # no bloquea el pipeline si hay vulnerabilidades
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: |
-          npm install -g snyk
-          snyk test --severity-threshold=high --all-projects
+        with:
+          args: --severity-threshold=high  # solo reporta Critical y High
 
       # ── 7. Compilar el .jar ──
       - name: Build del proyecto
@@ -98,7 +94,7 @@ jobs:
       # ── 9. Construir imagen Docker ──
       - name: Build de la imagen Docker
         run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/bdget-app:latest .
-        working-directory: mysql-local-2.4/mysql-local-2.4
+
       # ── 10. Escanear imagen Docker con Snyk ──
       - name: Escaneo de imagen Docker con Snyk
         uses: snyk/actions/docker@master
@@ -108,6 +104,10 @@ jobs:
         with:
           image: ${{ secrets.DOCKERHUB_USERNAME }}/bdget-app:latest
           args: --severity-threshold=high
+
+      # ── 11. Publicar imagen en DockerHub ──
+      - name: Push de la imagen a DockerHub
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/bdget-app:latest
 
       # ── 11. Publicar imagen en DockerHub ──
       - name: Push de la imagen a DockerHub
