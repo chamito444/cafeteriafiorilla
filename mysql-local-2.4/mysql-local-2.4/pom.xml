@@ -27,8 +27,8 @@
         <maven.compiler.release>17</maven.compiler.release>
 
         <!-- SonarCloud: verifica que coincidan con tu proyecto real -->
-        <sonar.projectKey>chamito444mysqllocal24</sonar.projectKey>
-        <sonar.organization>chamito444</sonar.organization>
+        <sonar.projectKey>chamito444_cafeteriafiorilla</sonar.projectKey>
+        <sonar.organization>chamito444mysqllocal24</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.projectName>cafeteriafiorilla</sonar.projectName>
     </properties>
