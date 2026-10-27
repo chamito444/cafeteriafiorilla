@@ -75,13 +75,15 @@ jobs:
             -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 
       # 6. Escanear dependencias Maven con Snyk
+            # 6. Escanear dependencias Maven con Snyk
+      - name: Instalar Snyk CLI
+        uses: snyk/actions/setup@master
+
       - name: Escaneo de vulnerabilidades Snyk (dependencias)
-        uses: snyk/actions/maven@master
+        run: snyk test --file=pom.xml --severity-threshold=high
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --severity-threshold=high --file=mysql-local-2.4/mysql-local-2.4/pom.xml
 
       # 7. Compilar el proyecto
       - name: Build del proyecto
