@@ -1,0 +1,57 @@
+name: Deploy API to ECS Fargate
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar credenciales AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
+
+      - name: Preparar definición de tarea
+        env:
+          IMAGE_URI: ${{ secrets.DOCKERHUB_USERNAME }}/bdget-app:latest
+        run: |
+          jq --arg image "$IMAGE_URI" \
+            '.containerDefinitions[0].image = $image' \
+            mysql-aws-3/ecs/td-app.tpl.json > /tmp/td-app.json
+
+      - name: Registrar nueva revisión de la tarea
+        id: task
+        run: |
+          TASK_ARN=$(aws ecs register-task-definition \
+            --cli-input-json file:///tmp/td-app.json \
+            --query "taskDefinition.taskDefinitionArn" \
+            --output text)
+
+          echo "task_arn=$TASK_ARN" >> "$GITHUB_OUTPUT"
+          echo "Nueva definición registrada: $TASK_ARN"
+
+      - name: Actualizar servicio ECS
+        run: |
+          aws ecs update-service \
+            --cluster bdget-ecs \
+            --service bdget-app \
+            --task-definition "${{ steps.task.outputs.task_arn }}"
+
+      - name: Esperar estabilidad del servicio
+        run: |
+          aws ecs wait services-stable \
+            --cluster bdget-ecs \
+            --services bdget-app
+
+          echo "Despliegue estable correctamente"
