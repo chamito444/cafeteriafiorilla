@@ -1,0 +1,25 @@
+{
+  "family": "bdget-client",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::767397846878:role/LabRole",
+  "taskRoleArn": "arn:aws:iam::767397846878:role/LabRole",
+  "containerDefinitions": [
+    {
+      "name": "client",
+      "image": "curlimages/curl:8.10.1",
+      "essential": true,
+      "command": ["sh", "-c", "while true; do curl -sS -o /dev/null http://bdget-app:8080/students; sleep 1; done"],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/bdget",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "client"
+        }
+      }
+    }
+  ]
+}

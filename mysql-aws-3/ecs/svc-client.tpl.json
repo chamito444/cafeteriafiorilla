@@ -1,0 +1,24 @@
+{
+  "cluster": "bdget-ecs",
+  "serviceName": "bdget-client",
+  "taskDefinition": "bdget-client:1",
+  "desiredCount": 1,
+  "launchType": "FARGATE",
+  "platformVersion": "LATEST",
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "subnets": [
+        "subnet-054752ff8c3787bc7",
+        "subnet-051176af06c0811ae"
+      ],
+      "securityGroups": [
+        "sg-02ec4a40e21ce6adc"
+      ],
+      "assignPublicIp": "ENABLED"
+    }
+  },
+  "serviceConnectConfiguration": {
+    "enabled": true,
+    "namespace": "bdget.local"
+  }
+}

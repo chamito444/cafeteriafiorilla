@@ -1,0 +1,36 @@
+{
+  "cluster": "bdget-ecs",
+  "serviceName": "bdget-app",
+  "taskDefinition": "bdget-app:1",
+  "desiredCount": 1,
+  "launchType": "FARGATE",
+  "platformVersion": "LATEST",
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "subnets": [
+        "subnet-054752ff8c3787bc7",
+        "subnet-051176af06c0811ae"
+      ],
+      "securityGroups": [
+        "sg-02ec4a40e21ce6adc"
+      ],
+      "assignPublicIp": "ENABLED"
+    }
+  },
+  "serviceConnectConfiguration": {
+    "enabled": true,
+    "namespace": "bdget.local",
+    "services": [
+      {
+        "portName": "http",
+        "discoveryName": "bdget-app",
+        "clientAliases": [
+          {
+            "port": 8080,
+            "dnsName": "bdget-app"
+          }
+        ]
+      }
+    ]
+  }
+}

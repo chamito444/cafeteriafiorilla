@@ -1,0 +1,56 @@
+{
+  "family": "bdget-app",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::767397846878:role/LabRole",
+  "taskRoleArn": "arn:aws:iam::767397846878:role/LabRole",
+  "containerDefinitions": [
+    {
+      "name": "bdget-app",
+      "image": "chamito4/bdget-app:lab",
+      "essential": true,
+      "portMappings": [
+        {
+          "name": "http",
+          "containerPort": 8080,
+          "appProtocol": "http",
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "SPRING_DATASOURCE_URL",
+          "value": "jdbc:mysql://mysql:3306/bdget_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"
+        },
+        {
+          "name": "SPRING_DATASOURCE_USERNAME",
+          "value": "bdget_user"
+        },
+        {
+          "name": "SPRING_DATASOURCE_PASSWORD",
+          "value": "bdget_pass"
+        }
+      ],
+      "healthCheck": {
+        "command": [
+          "CMD-SHELL",
+          "curl -fsS http://localhost:8080/actuator/health/liveness || exit 1"
+        ],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 60
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/bdget",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "app"
+        }
+      }
+    }
+  ]
+}

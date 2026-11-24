@@ -1,0 +1,38 @@
+{
+  "widgets": [
+    {
+      "type": "metric",
+      "x": 0,
+      "y": 0,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "view": "timeSeries",
+        "title": "CPUUtilization - bdget-app",
+        "region": "us-east-1",
+        "period": 60,
+        "stat": "Average",
+        "metrics": [
+          ["AWS/ECS", "CPUUtilization", "ClusterName", "bdget-ecs", "ServiceName", "bdget-app"]
+        ]
+      }
+    },
+    {
+      "type": "metric",
+      "x": 12,
+      "y": 0,
+      "width": 12,
+      "height": 6,
+      "properties": {
+        "view": "timeSeries",
+        "title": "MemoryUtilization - bdget-app",
+        "region": "us-east-1",
+        "period": 60,
+        "stat": "Average",
+        "metrics": [
+          ["AWS/ECS", "MemoryUtilization", "ClusterName", "bdget-ecs", "ServiceName", "bdget-app"]
+        ]
+      }
+    }
+  ]
+}
