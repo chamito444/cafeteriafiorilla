@@ -22,13 +22,19 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: us-east-1
 
-      - name: Preparar definición de tarea
+      - name: Obtener definición actual y preparar nueva imagen
         env:
           IMAGE_URI: ${{ secrets.DOCKERHUB_USERNAME }}/bdget-app:latest
         run: |
+          aws ecs describe-task-definition \
+            --task-definition bdget-app \
+            --query "taskDefinition" \
+            > /tmp/td-current.json
+
           jq --arg image "$IMAGE_URI" \
-            '.containerDefinitions[0].image = $image' \
-            mysql-aws-3/ecs/td-app.tpl.json > /tmp/td-app.json
+            'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .compatibilities, .registeredAt, .registeredBy, .deregisteredAt)
+            | .containerDefinitions[0].image = $image' \
+            /tmp/td-current.json > /tmp/td-app.json
 
       - name: Registrar nueva revisión de la tarea
         id: task
