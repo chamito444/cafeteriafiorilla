@@ -2,6 +2,7 @@
 # ETAPA 1: Build (compilar la aplicación)
 # ─────────────────────────────────────────────
 FROM eclipse-temurin:17-jdk AS build
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 # Instala Maven
 RUN apt-get update && apt-get install -y maven && rm -rf /var/lib/apt/lists/*
@@ -20,6 +21,7 @@ RUN mvn clean package -DskipTests -q
 # ETAPA 2: Runtime (imagen final, más liviana)
 # ─────────────────────────────────────────────
 FROM eclipse-temurin:17-jre
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
